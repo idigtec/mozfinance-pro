@@ -1,0 +1,6 @@
+{
+  "name": "MozFinance Pro",
+  "description": "ERP Multiempresa e Multissectorial para Moçambique (Restaurante, Farmácia, Delivery, Retalho, Construção), com navegação modular dinâmica, controlo de stock por sector, relatórios fiscais e tesouraria consolidada.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

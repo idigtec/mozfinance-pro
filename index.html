@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MozFinance Pro - microMoney</title>
+    <meta name="description" content="ERP Multiempresa e Multissectorial para Moçambique (Restaurante, Farmácia, Delivery, Retalho, Construção), com navegação modular dinâmica, controlo de stock por sector, relatórios fiscais e tesouraria consolidada." />
+    <meta property="og:title" content="MozFinance Pro - microMoney" />
+    <meta property="og:description" content="ERP Multiempresa e Multissectorial para Moçambique (Restaurante, Farmácia, Delivery, Retalho, Construção), com navegação modular dinâmica, controlo de stock por sector, relatórios fiscais e tesouraria consolidada." />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#059669" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="microMoney" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script>
+      // Defensive guard to prevent "TypeError: Cannot set property fetch of #<Window> which has only a getter"
+      try {
+        const originalFetch = window.fetch;
+        if (typeof originalFetch === 'function') {
+          const desc = Object.getOwnPropertyDescriptor(window, 'fetch') ||
+                       Object.getOwnPropertyDescriptor(Object.getPrototypeOf(window), 'fetch');
+          if (desc && (!desc.writable || !desc.set)) {
+            Object.defineProperty(window, 'fetch', {
+              get: () => originalFetch,
+              set: () => {},
+              configurable: true,
+            });
+          }
+        }
+      } catch (e) {
+        // Safe to ignore in standard browser environments
+      }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#ecfdf5',
+                100: '#d1fae5',
+                500: '#10b981',
+                600: '#059669',
+                700: '#047857',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f3f4f6;
+        transition: background-color 0.25s ease, color 0.25s ease;
+      }
+      /* Dark mode global overrides for tables, cards, inputs and modals */
+      html.dark body {
+        background-color: #0b1329;
+        color: #f1f5f9;
+      }
+      html.dark .bg-white {
+        background-color: #1e293b !important;
+        color: #f1f5f9;
+        border-color: #334155 !important;
+      }
+      html.dark .bg-gray-50, html.dark .bg-gray-100 {
+        background-color: #0f172a !important;
+        color: #e2e8f0;
+        border-color: #334155 !important;
+      }
+      html.dark .bg-gray-200 {
+        background-color: #1e293b !important;
+        border-color: #475569 !important;
+      }
+      html.dark .border-gray-100, html.dark .border-gray-200, html.dark .border-gray-300 {
+        border-color: #334155 !important;
+      }
+      html.dark .text-gray-900, html.dark .text-gray-800, html.dark .text-slate-900, html.dark .text-slate-800 {
+        color: #f8fafc !important;
+      }
+      html.dark .text-gray-700, html.dark .text-gray-600 {
+        color: #cbd5e1 !important;
+      }
+      html.dark .text-gray-500, html.dark .text-gray-400 {
+        color: #94a3b8 !important;
+      }
+      html.dark input, html.dark select, html.dark textarea {
+        background-color: #0f172a !important;
+        color: #f8fafc !important;
+        border-color: #334155 !important;
+      }
+      html.dark input::placeholder, html.dark textarea::placeholder {
+        color: #64748b !important;
+      }
+      html.dark table thead th {
+        background-color: #0f172a !important;
+        color: #94a3b8 !important;
+        border-color: #334155 !important;
+      }
+      html.dark table tbody tr {
+        border-color: #334155 !important;
+      }
+      html.dark table tbody tr:hover {
+        background-color: #1e293b80 !important;
+      }
+
+      /* Custom scrollbar for webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c1c1c1; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8; 
+      }
+      html.dark ::-webkit-scrollbar-track {
+        background: #0f172a; 
+      }
+      html.dark ::-webkit-scrollbar-thumb {
+        background: #334155; 
+      }
+      html.dark ::-webkit-scrollbar-thumb:hover {
+        background: #475569; 
+      }
+
+      /* PRINT OPTIMIZATION FOR PDF GENERATION */
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background: white !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .print\:hidden {
+          display: none !important;
+        }
+        /* Ensure the sheet fills the paper */
+        .w-full.max-w-\[210mm\] {
+          max-width: 100% !important;
+          width: 100% !important;
+          box-shadow: none !important;
+          border: none !important;
+          margin: 0 !important;
+          padding: 15mm !important;
+        }
+        /* Force text colors to be black for readability */
+        .text-gray-500, .text-gray-400 {
+          color: #4b5563 !important;
+        }
+        .bg-slate-900 {
+          background-color: #0f172a !important;
+          color: white !important;
+        }
+        textarea, input {
+          border: none !important;
+          outline: none !important;
+          background: transparent !important;
+        }
+      }
+    </style>
+  <link rel="stylesheet" href="/index.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch((err) => {
+          console.warn('ServiceWorker registration ignored:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
